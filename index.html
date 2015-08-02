@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+			<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+		<style>
+		.carousel{
+			border:1px solid #000;
+			overflow:hidden;
+		}
+		.carouselItem{
+			width:198px;
+			height:198px;
+			margin-left:5px;
+			opacity:0.2;
+			display:inline-block;
+			border:1px solid #000;
+			border-radius:50%;
+			text-align:center;
+		}
+		.carouselInnerItems{
+			position:relative;
+			left:50%;
+			overflow-x: visible;
+			overflow-y: hidden;
+		}
+		.carouselItem.color1{
+			background:red;
+		}
+		.carouselItem.color2{
+			background:green;
+		}
+		.carouselItem.color3{
+			background:yellow;
+		}
+		.carouselItem.color0{
+			background:blue;
+		}
+		.carouselItem:hover{
+			transform:scale(1.5);
+			opacity:1;
+		}
+		.selected{
+			opacity:1;
+			height:300px;
+			width:300px;
+		}
+		.carousel2{
+			width: 100%;
+			border: 2px solid blue;
+			min-height: 200px;
+		}
+		.carouselInner .prev,.carouselInner .next{
+			height:40px;
+			width:40px;
+			background:red;
+			top:45%;
+			position:absolute;
+			z-index:5;
+		}
+		.yearBox{
+			text-align:center;
+			z-index:5;
+		}
+		
+		.prev,.prevYear{
+			left:0;
+		}
+		.next,.nextyear{
+			right:0;
+		}
+		
+		
+			
+		</style>
+	</head>
+	<body>
+		<header>
+		</header>
+		<div id="wrapper container">
+			<div class="carousel">
+				<div class="yearBox">
+					<a class="prevYear hidden-xs" href="#mycarousel" data-slide="prevYear">
+						<i class="fa fa-chevron-left"></i>
+					</a>
+					<a class="nextYear hidden-xs" href="#mycarousel" data-slide="nextYear">
+						<i class="fa fa-chevron-right"></i>
+					</a>
+					<span id="initialLeft"></span>
+					<a href=#"><span id="currentLeft"></span></a>
+				</div>
+				<div class="carouselInner">
+					<a class="prev hidden-xs" href="#mycarousel" data-slide="prev">
+						<i class="fa fa-chevron-left"></i>
+					</a>
+					<a class="next hidden-xs" href="#mycarousel" data-slide="next">
+						<i class="fa fa-chevron-right"></i>
+					</a>
+					<div class="carouselInnerItems">
+					
+					</div>
+				</div>
+			</div>
+			<div class="carousel2">
+			</div>
+		</div>
+		<footer>
+		</footer>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function (){
+				var initialLeft = currentLeft = 0, minIndex = 1, maxIndex;
+				var carouselItemMarginLeft = 5, carouselItemWidth = 200;
+				var widthToMove = carouselItemMarginLeft + carouselItemWidth;
+				var currentSelectedIndex = 1;
+				var startYear = 2003;
+				function init() {
+					var items = [ { name: "item1",
+								value:"value1",
+								year:"2001"
+							},
+							{ name: "item2",
+								value:"value12",
+								year:"2001"
+							},
+							{ name: "item3",
+								value:"value3",
+								year:"2002"
+							},
+							{ name: "item4",
+								value:"value4",
+								year:"2003"
+							},
+							{ name: "item5",
+								value:"value5",
+								year:"2003"
+							},
+							{ name: "item6",
+								value:"value6",
+								year:"2003"
+							},
+							{ name: "item6",
+								value:"value6",
+								year:"2003"
+							},
+							{ name: "item8",
+								value:"value8",
+								year:"2004"
+							}
+						];
+					var carouselItems = [];	
+					var innerWidth = a = 0;
+					$(items).each(function(i, item) {
+					//	i++;
+						a++;
+						carouselItems.push('<div class="carouselItem color'+i%4+'"> <div class="name">'+item.name+'</div> <div class="value">'+item.value+'</div><div class="year">'+item.year+'</div>');
+					});
+					maxIndex = a;
+					innerWidth = a * carouselItemWidth + a * carouselItemMarginLeft + carouselItemWidth;
+					$('.carouselInner .carouselInnerItems').append(carouselItems);
+					$('.carouselInner .carouselInnerItems').css('width',innerWidth);
+					
+					initialMove();
+				}
+				function initialMove() {
+					initialLeft = parseInt($('.carouselInnerItems').css('left').slice('px'));
+					$('#initialLeft').html("carouselInnerItems initialLeft Value :"+initialLeft);
+					currentLeft = initialLeft - (carouselItemMarginLeft + carouselItemWidth/2);
+					$('.carouselInnerItems').css('left',currentLeft);
+					$('#currentLeft').html(currentLeft);
+					$('.carouselInner .carouselInnerItems .carouselItem:first-child').addClass('selected');
+				}
+				function carouselItemClick() {
+					$('.carouselInner .carouselInnerItems .carouselItem').removeClass('selected');
+					$(this).addClass('selected');
+				}
+				
+				function selectCarouselItem(position) { 
+					$('.carouselInner .carouselInnerItems .carouselItem').removeClass('selected');
+					$('.carouselInner .carouselInnerItems .carouselItem:nth-child('+position+')').addClass('selected');
+				}
+				
+				function getCurrentPosition() {
+					return currentLeft;
+				}
+				function positionItem() {
+						
+				}
+								
+				function nextYear() {
+				
+				}
+				
+				function prevYear() {
+				
+				}
+				
+				function nextItem() {
+					currentLeft = currentLeft - widthToMove;
+					$('.carouselInnerItems').css('left',currentLeft);
+					$('#currentLeft').html(" nextItem -> moveLeft :"+currentLeft); // span display
+					//if(currentSelectedIndex < maxIndex)
+					// To select Item to Next
+					currentSelectedIndex++;
+					selectCarouselItem(currentSelectedIndex);
+				}
+				function prevItem() {
+					currentLeft = currentLeft + widthToMove;
+					$('.carouselInnerItems').css('left',currentLeft);
+					
+					$('#currentLeft').html("prevItem -> moveRight :"+currentLeft); // span display
+					// To select Item to Previous
+					//if(currentSelectedIndex > minIndex) 
+					currentSelectedIndex--;
+					selectCarouselItem(currentSelectedIndex);
+				}
+				init();
+				$('.next').on('click', nextItem);
+				$('.prev').on('click', prevItem);
+				$('.nextYear').on('click', nextItem);
+				$('.prevYear').on('click' , prevItem);
+				$('.carouselInner .carouselInnerItems .carouselItem').on('click', carouselItemClick); 
+				
+			});
+		</script>
+	</body>
+</html>
